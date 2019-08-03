@@ -10,5 +10,5 @@ import UIKit
 
 struct Constants {
     
-    static let allReviewsUrl = "https://www.getyourguide.com/berlin-l17/tempelhof-2-hour-airport-history-tour-berlin-airlift-more-t23776/reviews.json?count=10&page="
+    static let allReviewsUrl = "https://www.getyourguide.com/berlin-l17/tempelhof-2-hour-airport-history-tour-berlin-airlift-more-t23776/reviews.json?count=5&page="
 }

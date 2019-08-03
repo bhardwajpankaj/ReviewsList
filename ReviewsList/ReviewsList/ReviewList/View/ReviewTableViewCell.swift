@@ -22,9 +22,19 @@ class ReviewTableViewCell: UITableViewCell, ReuseIdentifier ,NibLoadableView{
         override func prepareForReuse() {
             super.prepareForReuse()
         }
+    override func layoutSubviews() {
         
+    }
+    
+    func randomColor() -> UIColor{
+        let red = CGFloat(drand48())
+        let green = CGFloat(drand48())
+        let blue = CGFloat(drand48())
+        return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
         func updateInterface(review:Review){
             
+            authorLogoBgView.backgroundColor = self.randomColor()
             if let titleLblText = review.title,titleLblText.count > 0{
                 titleLbl.text = "\"\(titleLblText)\""
             }else
@@ -38,7 +48,6 @@ class ReviewTableViewCell: UITableViewCell, ReuseIdentifier ,NibLoadableView{
                 authorLogoLbl.text = "\(firstChar)"
             }
             ratingView.rating = ((review.rating ?? "") as NSString).floatValue
-            authorLogoBgView.backgroundColor = UIColor.random
         }
         
         func getConvertedDate(dateText:String) -> String {

@@ -12,15 +12,16 @@ import Foundation
 class ReviewsViewModel {
     
     private var currentPage : Int = 0
-    private var pageSize : Int = 10
+    private var pageSize : Int = 5
     private var requestUseCase :ReviewsRequestUseCase?
     var boolLoading : Bool = false
     var boolMoreDataAvailable : Bool = true
     var arrReviews : [Review]?
-    
+    var reviewModel : ReviewsResponseDTO?
+
     func getUserInfoFromStarting(completionHandler :@escaping (String?)->Void,useCase : ReviewsRequestUseCase = ReviewsRequestUseCase()) {
         currentPage = 0
-        pageSize = 10
+        pageSize = 5
         boolMoreDataAvailable = true
         getUserInfo(pageNo: currentPage, pageSize: pageSize, completionHandler: completionHandler,useCase: useCase)
     }
@@ -39,6 +40,7 @@ class ReviewsViewModel {
                 completionHandler(error.debugDescription)
             }else
             {
+                self.reviewModel = responseDTO
                 if self.currentPage == 0 {
                     self.arrReviews = responseDTO?.reviews
                 }else {

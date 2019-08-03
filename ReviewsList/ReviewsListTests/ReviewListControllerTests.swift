@@ -57,10 +57,7 @@ class ReviewListControllerTests: XCTestCase {
         XCTAssert(reviewsViewController.responds(to: #selector(reviewsViewController.tableView(_:numberOfRowsInSection:))))
         XCTAssert(reviewsViewController.responds(to: #selector(reviewsViewController.tableView(_:cellForRowAt:))))
     }
-    func testSUT_ConformsToTableViewDelegate() {
-        
-        XCTAssert(reviewsViewController.responds(to: #selector(reviewsViewController.tableView(_:willDisplay:forRowAt:))))
-    }
+    
     
     func testSUT_ShouldSetTableViewDelegate() {
         

@@ -29,6 +29,7 @@
 		8EF02A9B22F4269C005988CA /* NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF02A9A22F4269C005988CA /* NetworkManagerTests.swift */; };
 		8EF02A9D22F426F7005988CA /* ReviewListControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF02A9C22F426F7005988CA /* ReviewListControllerTests.swift */; };
 		8EF02AA122F42792005988CA /* ReviewTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF02AA022F42792005988CA /* ReviewTableViewCellTests.swift */; };
+		8EF02AA322F5FD6E005988CA /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF02AA222F5FD6E005988CA /* LoadingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		8EF02A9A22F4269C005988CA /* NetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerTests.swift; sourceTree = "<group>"; };
 		8EF02A9C22F426F7005988CA /* ReviewListControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewListControllerTests.swift; sourceTree = "<group>"; };
 		8EF02AA022F42792005988CA /* ReviewTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCellTests.swift; sourceTree = "<group>"; };
+		8EF02AA222F5FD6E005988CA /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 		8EF02A8322F42193005988CA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8EF02AA222F5FD6E005988CA /* LoadingCell.swift */,
 				8EF02A8422F421B3005988CA /* ReviewListController.swift */,
 				8EF02A8622F421E8005988CA /* ReviewTableViewCell.swift */,
 				8EF02A8722F421E8005988CA /* ReviewTableViewCell.xib */,
@@ -310,6 +313,7 @@
 				8EF02A9522F422FC005988CA /* ReviewsRequestUseCase.swift in Sources */,
 				8EF02A7B22F420B9005988CA /* Constants.swift in Sources */,
 				8EF02A8022F420B9005988CA /* NoNetworkViewController.swift in Sources */,
+				8EF02AA322F5FD6E005988CA /* LoadingCell.swift in Sources */,
 				8EF02A7E22F420B9005988CA /* RatingView.swift in Sources */,
 				8EF02A7D22F420B9005988CA /* Extensions.swift in Sources */,
 				8EF02A8822F421E8005988CA /* ReviewTableViewCell.swift in Sources */,

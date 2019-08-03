@@ -30,7 +30,7 @@ import XCTest
         func test_UserRequestDTO() {
             
             let sut = ReviewsRequestDTO(pageSize: 10, page: 0)
-            XCTAssertEqual(sut.createGetRequestUrl(url: Constants.allReviewsUrl)?.absoluteString, "https://www.getyourguide.com/berlin-l17/tempelhof-2-hour-airport-history-tour-berlin-airlift-more-t23776/reviews.json?count=10&page=0")
+            XCTAssertEqual(sut.createGetRequestUrl(url: Constants.allReviewsUrl)?.absoluteString, "https://www.getyourguide.com/berlin-l17/tempelhof-2-hour-airport-history-tour-berlin-airlift-more-t23776/reviews.json?count=5&page=0")
         }
         
         

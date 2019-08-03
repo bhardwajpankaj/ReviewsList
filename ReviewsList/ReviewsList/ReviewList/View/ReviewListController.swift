@@ -12,7 +12,6 @@ class ReviewListController: UIViewController,NoNetworkViewControllerDelegate {
     
     var viewModel: ReviewsViewModel?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    private var refreshControl:UIRefreshControl!
     @IBOutlet weak var lefrBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,6 +19,7 @@ class ReviewListController: UIViewController,NoNetworkViewControllerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         viewModel = ReviewsViewModel()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,20 +30,14 @@ class ReviewListController: UIViewController,NoNetworkViewControllerDelegate {
     
     private func setupUI() {
         
-        self.tableView?.rowHeight = UITableView.automaticDimension
-        self.tableView?.estimatedRowHeight = 200
-        self.refreshControl = UIRefreshControl()
+        tableView.prefetchDataSource = self
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = UITableView.automaticDimension
         
-        // refreshControl.addTarget(self, action: #selector(fetchData), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            tableView.addSubview(refreshControl)
-        }
         // Change font size for bar Button
         lefrBarButtonItem.setTitleTextAttributes([kCTFontAttributeName as NSAttributedString.Key: UIFont.systemFont(ofSize: 22, weight: .bold)], for: .normal)
         // Register custom cell to the tableview
-        self.tableView?.register(cell: ReviewTableViewCell.self)
+        tableView.register(cell: ReviewTableViewCell.self)
     }
     
     func didTapRetryButtonCalled() {
@@ -53,14 +47,13 @@ class ReviewListController: UIViewController,NoNetworkViewControllerDelegate {
     @objc func fetchData(){
         
         if Reachability.isConnectedToNetwork(){
-            viewModel?.getUserInfoFromStarting(completionHandler: { (message) in
+            viewModel?.getUserInfoFromStarting(completionHandler: {[weak self] (message) in
                 if message != nil{
                     //Handle Message
                 }else {
-                    self.tableView?.reloadData()
+                    self?.tableView.reloadData()
                 }
-                self.refreshControl.endRefreshing()
-                self.activityIndicator.stopAnimating()
+                self?.activityIndicator.stopAnimating()
             })
             
         }else{
@@ -71,37 +64,47 @@ class ReviewListController: UIViewController,NoNetworkViewControllerDelegate {
     }
 }
 
-// Tableview dalegates method
-extension ReviewListController : UITableViewDelegate{
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if let count = viewModel?.arrReviews?.count {
-            if indexPath.row == count - 1 && viewModel?.boolLoading == false && viewModel?.boolMoreDataAvailable == true {
-                self.viewModel?.getNextUserInfo(completionHandler: { (message) in
-                    if message != nil {
-                        //Handle Message
-                    }else {
-                        self.tableView?.reloadData()
-                    }
-                })
-            }
-        }
-    }
-}
 // Tableview data source
 extension ReviewListController : UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (viewModel?.arrReviews?.count) ?? 0
+        return (viewModel?.reviewModel?.totalReviewsComments) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        if isLoadingIndexPath(indexPath) {
+            return LoadingCell(style: .default, reuseIdentifier: "loading")
+        } else {
+            
         let cell : ReviewTableViewCell = tableView.dequeueReusableCell(indexPath: indexPath)
         if let review = viewModel?.arrReviews?[indexPath.item]{
             cell.updateInterface(review: review)
         }
         return cell
+        }
+    }
+    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+        return indexPath.row >= self.viewModel?.arrReviews?.count ?? 0
     }
 }
+
+// MARK: - UITableViewDataSourcePrefetching
+extension ReviewListController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        let needsFetch = indexPaths.contains { $0.row >= self.viewModel?.arrReviews?.count ?? 0 }
+        if needsFetch {
+            self.viewModel?.getNextUserInfo(completionHandler: { (message) in
+                if message != nil {
+                    //Handle Message
+                }else {
+
+                }
+            })
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+    }
+}
+
